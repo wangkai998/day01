@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.DevicetypeMapper">
+
+<select id="findUserPage" parameterType="devicetype" resultType="devicetype">
+select * from tb_device
+<where>
+<if test="devicename!=null and devicename!=''">
+and devicename like '%${devicename}%'
+</if>
+<if test="status!=null and status!=''">
+and tb_device.status=#{status}
+</if>
+</where>
+
+</select>
+<select id="existdeviceWithdeviceName" parameterType="string" resultType="devicetype">
+
+select * from tb_device where devicename=#{devicename}
+
+</select>
+<update id="updateDevice" parameterType="devicetype">
+update tb_device set devicename=#{devicename},devicetype=#{devicetype},deviceram=#{deviceram},color=#{color},price=#{price},status=#{status},createtime=#{createtime}
+
+</update>
+<insert id="addDevice" parameterType="devicetype" useGeneratedKeys="true" keyProperty="id">
+insert into tb_device values(null,#{devicename},#{devicetype},#{deviceram},#{color},#{price},#{status},#{createtime})
+</insert>
+<delete id="deleteDevice" parameterType="int">
+delete from tb_device where id=#{id}
+</delete>
+</mapper>
